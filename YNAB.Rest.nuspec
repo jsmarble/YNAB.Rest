@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>YNAB.Rest</id>
+    <version>0.3.0</version>
+    <title>YNAB.Rest</title>
+    <authors>Joshua Marble</authors>
+    <owners>Joshua Marble</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET client for the YNAB REST API, using the Refit REST library.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2018 Joshua Marble</copyright>
+    <dependencies>
+      <group targetFramework="netstandard2.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="YNAB.Rest\bin\Debug\netstandard2.0\YNAB.Rest.dll" target="lib\netstandard2.0\YNAB.Rest.dll" />
+    <file src="YNAB.Rest\bin\Debug\netstandard2.0\YNAB.Rest.xml" target="lib\netstandard2.0\YNAB.Rest.xml" />
+  </files>
+</package>
