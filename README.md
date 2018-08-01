@@ -8,8 +8,10 @@ A .NET client for the YNAB REST API, using the [Refit REST library](https://gith
 4. Start coding!
 
 ```cs
-string accessToken = "BEARER secret_api_access_token"; //"BEARER" is required in the accessToken string.
-var api = ApiClient.Create();
-var budgetsResponse = await api.GetBudgets(accessToken);
+string accessToken = "secret_api_access_token";
+var api = ApiClient.Create(accessToken);
+var budgetsResponse = await api.GetBudgets();
 var budgets = budgetsResponse.Data.Budgets;
 ```
+
+All methods return a response object that has a `Data` property containing the data from the REST API call. In this example, the response object contains a `Data` property that has a `Budgets` property with a list of Budgets.
