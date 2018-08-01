@@ -1,17 +1,30 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Refit;
+using System;
+using System.Net.Http;
 
 namespace YNAB.Rest
 {
     public static class ApiClient
     {
-        public static IApiClient Create()
+        /// <summary>
+        /// Creates an client for calling the YNAB REST API.
+        /// </summary>
+        /// <param name="accessToken">The API access token.</param>
+        /// <returns>An API client.</returns>
+        public static IApiClient Create(string accessToken)
         {
-            return Create("https://api.youneedabudget.com/v1");
+            return Create(accessToken, "https://api.youneedabudget.com/v1");
         }
 
-        public static IApiClient Create(string hostUrl)
+        /// <summary>
+        /// Creates an client for calling the YNAB REST API.
+        /// </summary>
+        /// <param name="accessToken">The API access token.</param>
+        /// <param name="hostUrl">The base address of the YNAB REST API.</param>
+        /// <returns>An API client.</returns>
+        public static IApiClient Create(string accessToken, string hostUrl)
         {
             var refitSettings = new RefitSettings
             {
@@ -24,7 +37,11 @@ namespace YNAB.Rest
                 }
             };
 
-            return RestService.For<IApiClient>(hostUrl, refitSettings);
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(hostUrl);
+            httpClient.DefaultRequestHeaders.Add("Authorization", "BEARER " + accessToken);
+
+            return RestService.For<IApiClient>(httpClient, refitSettings);
         }
     }
 }

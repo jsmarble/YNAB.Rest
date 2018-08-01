@@ -17,8 +17,8 @@ namespace YNAB.RestConsole
             {
                 string token = await GetAccessToken();
 
-                var api = ApiClient.Create();
-                var budgetsResponse = await api.GetBudgets(token);
+                var api = ApiClient.Create(token);
+                var budgetsResponse = await api.GetBudgets();
                 var budgets = budgetsResponse.Data.Budgets;
 
                 if (budgets.Count == 0)
@@ -34,7 +34,7 @@ namespace YNAB.RestConsole
                 Console.WriteLine($"Reading budget {budget.Name}");
                 Console.WriteLine();
 
-                var accountsResponse = await api.GetAccounts(budget.Id, token);
+                var accountsResponse = await api.GetAccounts(budget.Id);
                 var accounts = accountsResponse.Data.Accounts;
                 Console.WriteLine($"Found {accounts.Count} accounts!");
                 Console.WriteLine();
@@ -43,7 +43,7 @@ namespace YNAB.RestConsole
                 Console.WriteLine($"Reading account {account.Name} with balance {account.Balance.YnabIntToDecimal()}");
                 Console.WriteLine();
 
-                var transactionsResponse = await api.GetTransactionsByAccount(budget.Id, account.Id, token);
+                var transactionsResponse = await api.GetTransactionsByAccount(budget.Id, account.Id);
                 var transactions = transactionsResponse.Data.Transactions;
                 Console.WriteLine($"Found {transactions.Count} transactions!");
                 Console.WriteLine();
@@ -74,7 +74,7 @@ namespace YNAB.RestConsole
                 apiToken = Console.ReadLine();
             }
 
-            return "BEARER " + apiToken;
+            return apiToken;
         }
     }
 }
