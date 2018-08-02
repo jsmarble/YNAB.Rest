@@ -24,7 +24,7 @@ This structure follows the convention of the [YNAB REST API](https://api.youneed
 This is a new project. There are plenty of opportunities for improvement.
 
 ### What Works
-GET Budgets, Accounts, Categories, Transactions.
+GET Budgets, Accounts, Categories, Transactions  
 POST/PUT Transactions
 
 ### What Needs To Be Done
