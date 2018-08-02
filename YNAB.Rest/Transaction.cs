@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 
@@ -6,8 +7,8 @@ namespace YNAB.Rest
 {
     public enum ClearedStatus
     {
-        Cleared,
         Uncleared,
+        Cleared,
         Reconciled
     }
 
@@ -22,8 +23,10 @@ namespace YNAB.Rest
         public DateTime Date { get; set; }
         public string Memo { get; set; }
         public int Amount { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public ClearedStatus Cleared { get; set; }
         public bool Approved { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public FlagColor? FlagColor { get; set; }
         public string AccountId { get; set; }
         public string PayeeId { get; set; }

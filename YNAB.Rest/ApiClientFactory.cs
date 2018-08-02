@@ -6,16 +6,16 @@ using System.Net.Http;
 
 namespace YNAB.Rest
 {
-    public static class ApiClient
+    public static class ApiClientFactory
     {
         /// <summary>
         /// Creates an client for calling the YNAB REST API.
         /// </summary>
         /// <param name="accessToken">The API access token.</param>
         /// <returns>An API client.</returns>
-        public static IApiClient Create(string accessToken)
+        public static IApiClient Create(string accessToken, Func<HttpClient> httpClientSource = null)
         {
-            return Create(accessToken, "https://api.youneedabudget.com/v1");
+            return Create(accessToken, "https://api.youneedabudget.com/v1", httpClientSource);
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace YNAB.Rest
         /// <param name="accessToken">The API access token.</param>
         /// <param name="hostUrl">The base address of the YNAB REST API.</param>
         /// <returns>An API client.</returns>
-        public static IApiClient Create(string accessToken, string hostUrl)
+        public static IApiClient Create(string accessToken, string hostUrl, Func<HttpClient> httpClientSource = null)
         {
             var refitSettings = new RefitSettings
             {
@@ -37,7 +37,7 @@ namespace YNAB.Rest
                 }
             };
 
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = httpClientSource != null ? httpClientSource() : new HttpClient();
             httpClient.BaseAddress = new Uri(hostUrl);
             httpClient.DefaultRequestHeaders.Add("Authorization", "BEARER " + accessToken);
 

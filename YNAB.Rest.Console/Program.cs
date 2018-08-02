@@ -1,7 +1,10 @@
 ﻿using Refit;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using YNAB.Rest;
 
@@ -15,9 +18,12 @@ namespace YNAB.RestConsole
         {
             try
             {
+                HttpClientHandler httpClientHandler = new HttpClientHandler();
+                //httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
                 string token = await GetAccessToken();
 
-                var api = ApiClient.Create(token);
+                var api = ApiClientFactory.Create(token, () => new HttpClient(httpClientHandler));
                 var budgetsResponse = await api.GetBudgets();
                 var budgets = budgetsResponse.Data.Budgets;
 
@@ -30,8 +36,8 @@ namespace YNAB.RestConsole
                 budgets.ToList().ForEach(b => Console.WriteLine(b.Name));
                 Console.WriteLine();
 
-                var budget = budgets.OrderByDescending(x => x.LastModifiedOn).FirstOrDefault();
-                Console.WriteLine($"Reading budget {budget.Name}");
+                var budget = budgets.FirstOrDefault(x => x.Name == "Dev Budget");
+                Console.WriteLine($"Reading budget {budget.Name} ({budget.Id})");
                 Console.WriteLine();
 
                 var accountsResponse = await api.GetAccounts(budget.Id);
@@ -40,7 +46,7 @@ namespace YNAB.RestConsole
                 Console.WriteLine();
 
                 var account = accounts.OrderByDescending(x => x.Balance).FirstOrDefault();
-                Console.WriteLine($"Reading account {account.Name} with balance {account.Balance.YnabIntToDecimal()}");
+                Console.WriteLine($"Reading account {account.Name} ({account.Id}) with balance {account.Balance.YnabIntToDecimal()}");
                 Console.WriteLine();
 
                 var transactionsResponse = await api.GetTransactionsByAccount(budget.Id, account.Id);
@@ -48,7 +54,43 @@ namespace YNAB.RestConsole
                 Console.WriteLine($"Found {transactions.Count} transactions!");
                 Console.WriteLine();
 
-                transactions.ToList().ForEach(x => Console.WriteLine($"{x.PayeeName} | {x.CategoryName} | {x.Memo} | {x.Amount.YnabIntToDecimal():C2} | {x.FlagColor}"));
+                transactions.ToList().ForEach(x => Console.WriteLine($"{x.Id} | {x.PayeeName} | {x.CategoryName} | {x.Memo} | {x.Amount.YnabIntToDecimal():C2} | {x.FlagColor}"));
+
+                transactions = new List<Transaction>
+                {
+                    new Transaction
+                    {
+                         PayeeName = "Test1",
+                         Amount = Convert.ToInt32(108.41 * 1000),
+                         Memo = "This is test 1",
+                         AccountId = account.Id,
+                         Date = new DateTime(2018, 01, 15),
+                         Cleared = ClearedStatus.Cleared
+                    },
+                    new Transaction
+                    {
+                         PayeeName="Test2",
+                         Amount = Convert.ToInt32(208.42 * 1000),
+                         Memo="This is test 2",
+                         AccountId = account.Id,
+                         Date = new DateTime(2018, 02, 15),
+                         Cleared = ClearedStatus.Uncleared
+                    },
+                    new Transaction
+                    {
+                         PayeeName = "Test3",
+                         Amount = Convert.ToInt32(308.43 * 1000),
+                         Memo = "This is test 3",
+                         AccountId = account.Id,
+                         Date = new DateTime(2018, 03, 15),
+                         Cleared = ClearedStatus.Uncleared
+                    }
+                };
+
+                PostBulkTransactions bulk = new PostBulkTransactions { Transactions = transactions };
+                var result = await api.PostBulkTransactions(budget.Id, bulk);
+                Console.WriteLine("Duplicate import IDs: " + string.Join(", ", result.Data.Bulk.DuplicateImportIds));
+                Console.WriteLine("Transaction IDs: " + string.Join(", ", result.Data.Bulk.TransactionIds));
             }
             catch (Exception ex)
             {

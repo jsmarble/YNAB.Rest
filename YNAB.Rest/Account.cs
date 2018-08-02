@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace YNAB.Rest
 {
@@ -6,6 +7,7 @@ namespace YNAB.Rest
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public AccountType Type { get; set; }
         public bool OnBudget { get; set; }
         public bool Closed { get; set; }

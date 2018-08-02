@@ -1,5 +1,6 @@
 ﻿using Refit;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace YNAB.Rest
@@ -92,5 +93,14 @@ namespace YNAB.Rest
         /// <returns>An ApiResponse object containing the list of accounts in the Data property.</returns>
         [Get("/budgets/{budgetId}/transactions/{transactionId}")]
         Task<ApiResponse<TransactionData>> GetTransaction(string budgetId, string transactionId);
+
+        /// <summary>
+        /// Posts multiple Transactions for the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="transactions">The Transactions.</param>
+        /// <returns></returns>
+        [Post("/budgets/{budgetId}/transactions/bulk")]
+        Task<ApiResponse<PostBulkTransactionsData>> PostBulkTransactions(string budgetId, [Body] PostBulkTransactions transactions);
     }
 }
