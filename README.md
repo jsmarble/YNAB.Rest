@@ -20,5 +20,15 @@ All methods return a response object that has a `Data` property containing the d
 
 This structure follows the convention of the [YNAB REST API](https://api.youneedabudget.com/v1).
 
+## Project Status
+This is a new project. There are plenty of opportunities for improvement.
+
+### What Works
+GET Budgets, Accounts, Categories, Transactions.
+
+### What Needs To Be Done
+GET Payees, Payee Locations, Months, Scheduled Transactions
+POST/PUT Transactions
+
 ## License
 This code is [licensed under the MIT License](LICENSE). Use of this code requires consent to the terms of the license.
