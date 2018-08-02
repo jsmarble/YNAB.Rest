@@ -89,18 +89,37 @@ namespace YNAB.Rest
         /// Gets a single Transaction for the specified Budget and Transaction ID.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
-        /// <param name="transactionId">The ID of the Transaction</param>
+        /// <param name="transactionId">The ID of the Transaction.</param>
         /// <returns>An ApiResponse object containing the list of accounts in the Data property.</returns>
         [Get("/budgets/{budgetId}/transactions/{transactionId}")]
         Task<ApiResponse<TransactionData>> GetTransaction(string budgetId, string transactionId);
 
         /// <summary>
-        /// Posts multiple Transactions for the specified Budget.
+        /// Creates a single Transaction in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="transaction">The Transaction.</param>
+        /// <returns>A response containing the created Transaction.</returns>
+        [Post("/budgets/{budgetId}/transactions")]
+        Task<ApiResponse<TransactionBody>> PostTransaction(string budgetId, [Body] TransactionBody transaction);
+
+        /// <summary>
+        /// Creates multiple Transactions in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="transactions">The Transactions.</param>
-        /// <returns></returns>
+        /// <returns>A response containing the results of the bulk create.</returns>
         [Post("/budgets/{budgetId}/transactions/bulk")]
         Task<ApiResponse<PostBulkTransactionsData>> PostBulkTransactions(string budgetId, [Body] PostBulkTransactions transactions);
+
+        /// <summary>
+        /// Updates a single Transaction in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="transactionId">The ID of the Transaction.</param>
+        /// <param name="transaction">The Transaction.</param>
+        /// <returns>A response containing the updated Transaction.</returns>
+        [Put("/budgets/{budgetId}/transactions/{transactionId}")]
+        Task<ApiResponse<TransactionBody>> PutTransaction(string budgetId, string transactionId, [Body] TransactionBody transaction);
     }
 }

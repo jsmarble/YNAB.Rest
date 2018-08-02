@@ -87,10 +87,30 @@ namespace YNAB.RestConsole
                     }
                 };
 
+                Console.WriteLine($"Posting {transactions.Count} transactions ...");
                 PostBulkTransactions bulk = new PostBulkTransactions { Transactions = transactions };
                 var result = await api.PostBulkTransactions(budget.Id, bulk);
                 Console.WriteLine("Duplicate import IDs: " + string.Join(", ", result.Data.Bulk.DuplicateImportIds));
                 Console.WriteLine("Transaction IDs: " + string.Join(", ", result.Data.Bulk.TransactionIds));
+
+                Console.WriteLine("Posting a single transaction ...");
+                TransactionBody post = new TransactionBody
+                {
+                    Transaction = new Transaction
+                    {
+                        PayeeName = "Test123",
+                        Amount = Convert.ToInt32(123.45 * 1000),
+                        Memo = "This is test 123",
+                        AccountId = account.Id,
+                        Date = new DateTime(2018, 01, 23),
+                        Cleared = ClearedStatus.Cleared
+                    }
+                };
+                var t = (await api.PostTransaction(budget.Id, post)).Data.Transaction;
+                Console.WriteLine($"Posted Transaction with ID {t.Id}.");
+
+                t.Memo = "updated through PUT";
+                await api.PutTransaction(budget.Id, t.Id, new TransactionBody { Transaction = t });
             }
             catch (Exception ex)
             {

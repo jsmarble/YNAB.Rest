@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>YNAB.Rest</id>
-    <version>0.4</version>
+    <version>0.5</version>
     <title>YNAB.Rest</title>
     <authors>Joshua Marble</authors>
     <owners>Joshua Marble</owners>
