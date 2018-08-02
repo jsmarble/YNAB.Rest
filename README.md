@@ -27,7 +27,7 @@ This is a new project. There are plenty of opportunities for improvement.
 GET Budgets, Accounts, Categories, Transactions.
 
 ### What Needs To Be Done
-GET Payees, Payee Locations, Months, Scheduled Transactions
+GET Payees, Payee Locations, Months, Scheduled Transactions  
 POST/PUT Transactions
 
 ## License
