@@ -19,3 +19,6 @@ var budgets = budgetsResponse.Data.Budgets;
 All methods return a response object that has a `Data` property containing the data from the REST API call. In this example, the response object contains a `Data` property that has a `Budgets` property with a list of Budgets.
 
 This structure follows the convention of the [YNAB REST API](https://api.youneedabudget.com/v1).
+
+## License
+This code is [licensed under the MIT License](LICENSE). Use of this code requires consent to the terms of the license.
