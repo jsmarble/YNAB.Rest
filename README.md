@@ -4,13 +4,13 @@ A .NET client for the YNAB REST API, using the [Refit REST library](https://gith
 ## Getting Started
 1. Install the [Nuget package](https://www.nuget.org/packages/YNAB.Rest/) or compile the code.
 2. Import the namespace `YNAB.Rest`.
-3. Create an IApiClient by calling `ApiClient.Create([accessToken])`.
+3. Create an IApiClient by calling `ApiClientFactory.Create([accessToken])`.
 4. Start coding!
 
 ### Example Code
 ```cs
 string accessToken = "secret_api_access_token";
-var api = ApiClient.Create(accessToken);
+var api = ApiClientFactory.Create(accessToken);
 var budgetsResponse = await api.GetBudgets();
 var budgets = budgetsResponse.Data.Budgets;
 ```
@@ -25,10 +25,10 @@ This is a new project. There are plenty of opportunities for improvement.
 
 ### What Works
 GET Budgets, Accounts, Categories, Transactions.
+POST/PUT Transactions
 
 ### What Needs To Be Done
 GET Payees, Payee Locations, Months, Scheduled Transactions  
-POST/PUT Transactions
 
 ## License
 This code is [licensed under the MIT License](LICENSE). Use of this code requires consent to the terms of the license.
