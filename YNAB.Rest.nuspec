@@ -6,6 +6,7 @@
     <title>YNAB.Rest</title>
     <authors>Joshua Marble</authors>
     <owners>Joshua Marble</owners>
+    <projectUrl>https://github.com/jsmarble/YNAB.Rest</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A .NET client for the YNAB REST API, using the Refit REST library.</description>
     <releaseNotes></releaseNotes>
