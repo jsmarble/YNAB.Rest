@@ -1,6 +1,4 @@
 ﻿using Refit;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace YNAB.Rest
@@ -121,5 +119,22 @@ namespace YNAB.Rest
         /// <returns>A response containing the updated Transaction.</returns>
         [Put("/budgets/{budgetId}/transactions/{transactionId}")]
         Task<ApiResponse<TransactionBody>> PutTransaction(string budgetId, string transactionId, [Body] TransactionBody transaction);
+
+        /// <summary>
+        /// Gets a list of payees in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns>An ApiResponse object containing the list of payees in the Data property.</returns>
+        [Get("/budgets/{budgetId}/payees")]
+        Task<ApiResponse<PayeesData>> GetPayees(string budgetId);
+
+        /// <summary>
+        /// Gets a single payee in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="payeeId">The ID of the Payee.</param>
+        /// <returns>An ApiResponse object containing a single payee in the Data property.</returns>
+        [Get("/budgets/{budgetId/payees/{payeeId}")]
+        Task<ApiResponse<PayeeData>> GetPayee(string budgetId, string payeeId);
     }
 }
