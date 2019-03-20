@@ -1,9 +1,7 @@
-﻿using Refit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using YNAB.Rest;
@@ -111,6 +109,13 @@ namespace YNAB.RestConsole
 
                 t.Memo = "updated through PUT";
                 await api.PutTransaction(budget.Id, t.Id, new TransactionBody { Transaction = t });
+
+                var payeesResponse = await api.GetPayees(budget.Id);
+                var payees = payeesResponse.Data.Payees;
+                Console.WriteLine($"Found {payees.Count} payees!");
+                Console.WriteLine();
+
+                payees.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
             }
             catch (Exception ex)
             {
