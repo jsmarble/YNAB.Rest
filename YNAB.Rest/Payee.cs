@@ -7,7 +7,7 @@ namespace YNAB.Rest
         public string Id { get; set; }
         public string Name { get; set; }
         public string TransferAccountId { get; set; }
-        public bool Delete { get; set; }
+        public bool Deleted { get; set; }
     }
 
     /*
