@@ -160,5 +160,23 @@ namespace YNAB.Rest {
         /// <reurns>An ApiResponse object containing a list of locations for a payee</returns>
         [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
         Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee (string budgetId, string payeeId);
+
+        /// <summary>
+        /// Returns a single budget month
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns> An ApiResponse object containing a list of months for a budget</returns>
+        [Get ("/budgets/{budgetId}/months")]
+        Task<ApiResponse<Month>> GetMonths (string budgetId, DateTime month);
+
+        /// <summary>
+        /// Returns a single budget month
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="month">The month to retrieve data for</param>
+        /// <returns> An ApiResponse object containing data for a month</returns>
+        [Get ("/budgets/{budgetId}/months/{month}")]
+        Task<ApiResponse<Month>> GetMonth s (string budgetId, DateTime month)
     }
+}
 }
