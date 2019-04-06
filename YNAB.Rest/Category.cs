@@ -1,17 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace YNAB.Rest
-{
-    public enum GoalType
-    {
+namespace YNAB.Rest {
+    public enum GoalType {
         TB,
         TBD,
         MF
     }
 
-    public class Category
-    {
+    public class Category {
         public string Id { get; set; }
         public string Name { get; set; }
         public string CategoryGroupId { get; set; }
@@ -21,8 +18,9 @@ namespace YNAB.Rest
         public int Budgeted { get; set; }
         public int Activity { get; set; }
         public int Balance { get; set; }
-        [JsonConverter(typeof(StringEnumConverter))]
-        public GoalType GoalType { get; set; }
+
+        [JsonConverter (typeof (StringEnumConverter))]
+        public GoalType? GoalType { get; set; }
         public int GoalPercentageComplete { get; set; }
         public bool Deleted { get; set; }
 
