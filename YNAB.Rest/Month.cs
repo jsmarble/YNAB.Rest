@@ -1,12 +1,17 @@
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
 namespace YNAB.Rest {
     public class Month {
-        public string Month { get; set; }
+        [JsonProperty ("month")]
+        public string MonthName { get; set; }
         public string Note { get; set; }
         public long Income { get; set; }
         public long Budgeted { get; set; }
         public long Activity { get; set; }
         public long ToBeBudgeted { get; set; }
-        public int AgeOfMoney { get; set; }
+        public int? AgeOfMoney { get; set; }
         public bool Deleted { get; set; }
         public IList<Category> Categories { get; set; }
     }

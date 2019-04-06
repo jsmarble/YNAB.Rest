@@ -120,6 +120,18 @@ namespace YNAB.RestConsole {
                 var locationsForPayee = locationsForPayeeReponse.Data.PayeeLocations;
                 Console.WriteLine ($"Found {locationsForPayee.Count} locations for payee {payees.ToList().First().Id}");
                 Console.WriteLine ();
+
+                var monthsResponse = await api.GetMonths (budget.Id);
+                var months = monthsResponse.Data.Months.ToList ();
+
+                Console.WriteLine ($"Found {months.Count} months for budget {budget.Name}");
+                Console.WriteLine ();
+
+                var monthResponse = await api.GetMonth (budget.Id, months.First ().MonthName);
+                var month = monthResponse.Data;
+                Console.WriteLine ($"Month data: {month.Month.MonthName}");
+                Console.WriteLine ();
+
             } catch (Exception ex) {
                 Console.WriteLine ("Error: " + ex.Message);
             }
