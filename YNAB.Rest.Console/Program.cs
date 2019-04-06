@@ -116,6 +116,18 @@ namespace YNAB.RestConsole
                 Console.WriteLine();
 
                 payees.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
+
+                var scheduledTransactionsResponse = await api.GetScheduledTransactions(budget.Id);
+                var scheduledTransactions = scheduledTransactionsResponse.Data.ScheduledTransactions;
+                Console.WriteLine($"Found {scheduledTransactions.Count} scheduledTransactions");
+                Console.WriteLine();
+
+                if (scheduledTransactions.Count > 0)
+                {
+                    var scheduledTransaction = await api.GetScheduledTransaction(budget.Id, scheduledTransactions[0].id);
+                    Console.WriteLine($"Scheduled Transaction: {scheduledTransaction.Data.ScheduledTransaction.Amount}");
+                    Console.WriteLine();
+                }
             }
             catch (Exception ex)
             {
@@ -137,8 +149,12 @@ namespace YNAB.RestConsole
             }
             else
             {
-                Console.Write("YNAB API Access Token: ");
-                apiToken = Console.ReadLine();
+                apiToken = Environment.GetEnvironmentVariable("YNAB_TOKEN");
+                if (string.IsNullOrEmpty(apiToken))
+                {
+                    Console.Write("YNAB API Access Token: ");
+                    apiToken = Console.ReadLine();
+                }
             }
 
             return apiToken;
