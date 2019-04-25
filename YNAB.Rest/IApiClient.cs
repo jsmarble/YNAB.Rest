@@ -66,6 +66,16 @@ namespace YNAB.Rest
         Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId);
 
         /// <summary>
+        /// Gets all Transactions from the specified Budget that occured on or after the start date.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="startDate">The ISO start date. For example: 2018-03-01</param>
+        /// <returns></returns>
+        [Get("/budgets/{budgetId}/transactions?since_date={startDate}")]
+        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, string startDate);
+
+
+        /// <summary>
         /// Gets all Transactions for the specified Budget and Account.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
