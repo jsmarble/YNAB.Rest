@@ -22,8 +22,8 @@ namespace YNAB.Rest
         public int Activity { get; set; }
         public int Balance { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public GoalType GoalType { get; set; }
-        public int GoalPercentageComplete { get; set; }
+        public GoalType? GoalType { get; set; }
+        public int? GoalPercentageComplete { get; set; }
         public bool Deleted { get; set; }
 
         /* JSON
