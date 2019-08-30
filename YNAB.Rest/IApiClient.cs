@@ -136,5 +136,31 @@ namespace YNAB.Rest
         /// <returns>An ApiResponse object containing a single payee in the Data property.</returns>
         [Get("/budgets/{budgetId/payees/{payeeId}")]
         Task<ApiResponse<PayeeData>> GetPayee(string budgetId, string payeeId);
+
+        /// <summary>
+        /// Gets a list of payee locations in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns>An ApiResponse object containing a list of payee locations in the Data Property.</returns>
+        [Get ("/budgets/{budgetId}/payee_locations")]
+        Task<ApiResponse<PayeeLocationsData>> GetPayeeLocations (string budgetId);
+
+        /// <summary>
+        /// Gets a single payee location in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="payeeLocationId">The ID of the Payee Location</param>
+        /// <returns>An ApiResponse object containing a single payee location in the Data Property.</returns>
+        [Get ("/budgets/{budgetId}/payee_locations/{payeeLocationId}")]
+        Task<ApiResponse<PayeeLocationsData>> GetPayeeLocation (string budgetId, string payeeLocationId);
+
+        /// <summary>
+        /// Gets a list of locations for a payee.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="payeeId">The ID of the Payee.</param>
+        /// <reurns>An ApiResponse object containing a list of locations for a payee</returns>
+        [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
+        Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee (string budgetId, string payeeId);
     }
 }

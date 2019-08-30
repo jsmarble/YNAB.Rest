@@ -24,11 +24,11 @@ This structure follows the convention of the [YNAB REST API](https://api.youneed
 This is a new project. There are plenty of opportunities for improvement.
 
 ### What Works
-GET Budgets, Accounts, Categories, Transactions  
+GET Budgets, Accounts, Categories, Transactions, Payees, Payee Locations
 POST/PUT Transactions
 
 ### What Needs To Be Done
-GET Payees, Payee Locations, Months, Scheduled Transactions  
+GET Months, Scheduled Transactions  
 
 ## License
 This code is [licensed under the MIT License](LICENSE). Use of this code requires consent to the terms of the license.
