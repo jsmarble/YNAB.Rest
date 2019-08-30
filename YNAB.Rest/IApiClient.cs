@@ -179,5 +179,23 @@ namespace YNAB.Rest
         /// <returns> An ApiResponse object containing a list of months for a budget</returns>
         [Get ("/budgets/{budgetId}/months")]
         Task<ApiResponse<MonthsData>> GetMonths(string budgetId);
+
+        /// <summary>
+        /// Gets a list of scheduled transactions in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the budget.</param>
+        /// <returns>An ApiResponse object containing a list of scheduled transactions in the Data property</returns>
+        [Get("/budgets/{budgetId}/scheduled_transactions")]
+        Task<ApiResponse<ScheduledTransactionsData>> GetScheduledTransactions(string budgetId);
+
+        /// <summary>
+        /// Gets a single scheduled transaction in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="scheduledTransactionId">The ID of the scheduled transaction</param>
+        /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
+        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId")]
+        Task<ApiResponse<ScheduledTransactionData>> GetScheduledTransaction(string budgetId, string scheduledTransactionId);
+
     }
 }
