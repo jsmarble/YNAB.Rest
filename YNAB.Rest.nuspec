@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>YNAB.Rest</id>
-    <version>0.5</version>
+    <version>0.7</version>
     <title>YNAB.Rest</title>
     <authors>Joshua Marble</authors>
     <owners>Joshua Marble</owners>
-    <projectUrl>https://github.com/jsmarble/YNAB.Rest</projectUrl>
+    <projectUrl>https://gitlab.com/jsmarble/YNAB-Rest</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A .NET client for the YNAB REST API, using the Refit REST library.</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2018 Joshua Marble</copyright>
+    <copyright>Copyright 2019 Joshua Marble</copyright>
     <dependencies>
       <group targetFramework="netstandard2.0">
         <dependency id="Newtonsoft.Json" version="10.0" />
