@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Joshua Marble</Authors>
+    <PackageId>YNAB.Rest</PackageId>
+    <Version>0.7.0</Version>
+    <Description>A .NET Standard client for the YNAB REST API, using the Refit REST library.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
