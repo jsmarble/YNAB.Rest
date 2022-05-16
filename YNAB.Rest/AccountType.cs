@@ -8,6 +8,7 @@
         CreditCard,
         LineOfCredit,
         OtherAsset,
-        OtherLiability
+        OtherLiability,
+        Mortgage
     }
 }
