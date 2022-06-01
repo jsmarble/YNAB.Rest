@@ -9,6 +9,9 @@
         LineOfCredit,
         OtherAsset,
         OtherLiability,
+        PayPal,
+        MerchantAccount,
+        InvestmentAccount,
         Mortgage
     }
 }
