@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="4.6.30" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
   </ItemGroup>
 
 </Project>
