@@ -66,6 +66,16 @@ namespace YNAB.Rest
         Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId);
 
         /// <summary>
+        /// Gets all Transactions from the specified Budget that occured on or after a specified date.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="sinceDate">The ISO start date. For example: 2018-03-01</param>
+        /// <returns></returns>
+        [Get("/budgets/{budgetId}/transactions?since_date={sinceDate}")]
+        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, string sinceDate);
+
+
+        /// <summary>
         /// Gets all Transactions for the specified Budget and Account.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
@@ -73,6 +83,18 @@ namespace YNAB.Rest
         /// <returns>An ApiResponse object containing the list of Transactions in the Data property.</returns>
         [Get("/budgets/{budgetId}/accounts/{accountId}/transactions")]
         Task<ApiResponse<TransactionsData>> GetTransactionsByAccount(string budgetId, string accountId);
+
+
+        /// <summary>
+        /// Gets all Transactions for the specified Budget and Account that occured on or after a specified date.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="accountId">The ID of the Account.</param>
+        /// <param name="sinceDate">The ISO start date. For example: 2018-03-01</param>
+        /// <returns>An ApiResponse object containing the list of Transactions in the Data property.</returns>
+        [Get("/budgets/{budgetId}/accounts/{accountId}/transactions?since_date={sinceDate}")]
+        Task<ApiResponse<TransactionsData>> GetTransactionsByAccount(string budgetId, string accountId, string sinceDate);
+
 
         /// <summary>
         /// Gets all Transactions for the specified Budget and Category.
