@@ -133,6 +133,14 @@ namespace YNAB.Rest
         Task<ApiResponse<PostBulkTransactionsData>> PostBulkTransactions(string budgetId, [Body] PostBulkTransactions transactions);
 
         /// <summary>
+        /// Imports available transactions on all linked accounts for the given budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns>A response containing the transaction ids that have been imported..</returns>
+        [Post("/budgets/{budgetId}/transactions/import")]
+        Task<ApiResponse<PostImportTransactionsData>> PostImportTransactions(string budgetId);
+
+        /// <summary>
         /// Updates a single Transaction in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>

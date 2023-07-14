@@ -15,7 +15,7 @@ namespace YNAB.Rest
         /// <returns>An API client.</returns>
         public static IApiClient Create(string accessToken, Func<HttpClient> httpClientSource = null)
         {
-            return Create(accessToken, "https://api.youneedabudget.com/v1", httpClientSource);
+            return Create(accessToken, "https://api.ynab.com/v1", httpClientSource);
         }
 
         /// <summary>
