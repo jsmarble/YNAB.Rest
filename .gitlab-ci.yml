@@ -1,0 +1,28 @@
+image: mcr.microsoft.com/dotnet/core/sdk:2.1
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - dotnet restore
+    - dotnet build $lib
+
+test:
+  stage: test
+  script:
+    - dotnet test
+
+deploy:
+  stage: deploy
+  when: manual
+  only:
+    - master
+  script:
+    - cd YNAB.Rest
+    - rm -f bin/Debug/*.nupkg
+    - dotnet pack
+    - dotnet nuget push bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key

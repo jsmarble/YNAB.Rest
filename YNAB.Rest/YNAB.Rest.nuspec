@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://gitlab.com/jsmarble/YNAB.Rest</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2019 Joshua Marble</copyright>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="Newtonsoft.Json" version="10.0" />
+        <dependency id="refit" version="4.6" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\netstandard2.0\YNAB.Rest.dll" target="lib\netstandard2.0\YNAB.Rest.dll" />
+    <file src="bin\Debug\netstandard2.0\YNAB.Rest.xml" target="lib\netstandard2.0\YNAB.Rest.xml" />
+  </files>
+</package>

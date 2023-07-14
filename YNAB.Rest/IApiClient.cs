@@ -1,4 +1,4 @@
-﻿using Refit;
+using Refit;
 using System.Threading.Tasks;
 
 namespace YNAB.Rest
@@ -166,5 +166,66 @@ namespace YNAB.Rest
         /// <returns>An ApiResponse object containing a single payee in the Data property.</returns>
         [Get("/budgets/{budgetId/payees/{payeeId}")]
         Task<ApiResponse<PayeeData>> GetPayee(string budgetId, string payeeId);
+
+        /// <summary>
+        /// Gets a list of payee locations in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns>An ApiResponse object containing a list of payee locations in the Data Property.</returns>
+        [Get ("/budgets/{budgetId}/payee_locations")]
+        Task<ApiResponse<PayeeLocationsData>> GetPayeeLocations(string budgetId);
+
+        /// <summary>
+        /// Gets a single payee location in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="payeeLocationId">The ID of the Payee Location</param>
+        /// <returns>An ApiResponse object containing a single payee location in the Data Property.</returns>
+        [Get ("/budgets/{budgetId}/payee_locations/{payeeLocationId}")]
+        Task<ApiResponse<PayeeLocationsData>> GetPayeeLocation(string budgetId, string payeeLocationId);
+
+        /// <summary>
+        /// Gets a list of locations for a payee.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="payeeId">The ID of the Payee.</param>
+        /// <reurns>An ApiResponse object containing a list of locations for a payee</returns>
+        [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
+        Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee(string budgetId, string payeeId);
+
+        /// <summary>
+        /// Gets a single month in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="month">The month to retrieve.</param>
+        /// <returns> An ApiResponse object containing data for a month</returns>
+        [Get ("/budgets/{budgetId}/months/{month}")]
+        Task<ApiResponse<MonthData>> GetMonth(string budgetId, string month);
+
+        /// <summary>
+        /// Gets a list of months in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <returns> An ApiResponse object containing a list of months for a budget</returns>
+        [Get ("/budgets/{budgetId}/months")]
+        Task<ApiResponse<MonthsData>> GetMonths(string budgetId);
+
+        /// <summary>
+        /// Gets a list of scheduled transactions in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the budget.</param>
+        /// <returns>An ApiResponse object containing a list of scheduled transactions in the Data property</returns>
+        [Get("/budgets/{budgetId}/scheduled_transactions")]
+        Task<ApiResponse<ScheduledTransactionsData>> GetScheduledTransactions(string budgetId);
+
+        /// <summary>
+        /// Gets a single scheduled transaction in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="scheduledTransactionId">The ID of the scheduled transaction</param>
+        /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
+        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId")]
+        Task<ApiResponse<ScheduledTransactionData>> GetScheduledTransaction(string budgetId, string scheduledTransactionId);
+
     }
 }
