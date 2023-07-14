@@ -8,6 +8,10 @@
         CreditCard,
         LineOfCredit,
         OtherAsset,
-        OtherLiability
+        OtherLiability,
+        PayPal,
+        MerchantAccount,
+        InvestmentAccount,
+        Mortgage
     }
 }

@@ -15,7 +15,7 @@ namespace YNAB.Rest
         /// <returns>An API client.</returns>
         public static IApiClient Create(string accessToken, Func<HttpClient> httpClientSource = null)
         {
-            return Create(accessToken, "https://api.youneedabudget.com/v1", httpClientSource);
+            return Create(accessToken, "https://api.ynab.com/v1", httpClientSource);
         }
 
         /// <summary>
@@ -26,16 +26,7 @@ namespace YNAB.Rest
         /// <returns>An API client.</returns>
         public static IApiClient Create(string accessToken, string hostUrl, Func<HttpClient> httpClientSource = null)
         {
-            var refitSettings = new RefitSettings
-            {
-                JsonSerializerSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new DefaultContractResolver
-                    {
-                        NamingStrategy = new SnakeCaseNamingStrategy()
-                    }
-                }
-            };
+            var refitSettings = new RefitSettings(new NewtonsoftJsonContentSerializer(new JsonSerializerSettings { ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() } }));
 
             HttpClient httpClient = httpClientSource != null ? httpClientSource() : new HttpClient();
             httpClient.BaseAddress = new Uri(hostUrl);
