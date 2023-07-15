@@ -85,10 +85,22 @@ jobs:
             dotnet-gitversion /updateprojectfiles
             rm -f bin/Debug/*.nupkg
             dotnet pack
-            dotnet nuget push bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
+            dotnet nuget pushx bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
           name: Push Changes
           command: |
             git push -o ci.skip
             git push --tags
+
+workflows:
+  test_build_release:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+      - release:
+          requires:
+            - test
+            - build
