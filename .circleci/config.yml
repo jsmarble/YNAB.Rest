@@ -54,13 +54,13 @@ jobs:
 
   deploy_nuget:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - run:
           name: Install GitVersion and ssh
           command: |
-            apk add openssh-client
+            apk add --no-cache bash openssh-client
             dotnet tool install --global gitversion.tool
 
       - add_ssh_keys:
@@ -75,6 +75,7 @@ jobs:
 
       - run:
           name: Get Version
+          shell: /bin/bash
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
             export SEMVER=$(dotnet-gitversion /showvariable SemVer)
@@ -83,6 +84,7 @@ jobs:
 
       # - run:
       #     name: Build and Pack
+      #     shell: /bin/bash
       #     command: |
       #       export PATH="$PATH:/root/.dotnet/tools"
       #       dotnet-gitversion /updateprojectfiles
@@ -92,6 +94,7 @@ jobs:
 
       - run:
           name: Tag Release and Push Changes
+          shell: /bin/bash
           command: |
             git branch --set-upstream-to origin/$CIRCLE_BRANCH
             echo "Tagging release with '$SEMVER'"
