@@ -90,9 +90,10 @@ jobs:
       #       dotnet nuget push YNAB.Rest/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
-          name: Push Changes
+          name: Tag Release and Push Changes
           command: |
             git branch --set-upstream-to origin/$CIRCLE_BRANCH
+            git tag $SEMVER
             git push -o ci.skip
             git push --tags
 
