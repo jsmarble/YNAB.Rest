@@ -1,5 +1,14 @@
 mode: Mainline
-branches: {}
+branches:
+  main:
+    regex: ^master$|^main$
+    tag: ''
+    increment: Patch
+  branch:
+    regex: ^[^\s\\]$
+    source-branches: ['master', 'main', 'feature']
+    tag: Alpha
+    increment: Patch
 ignore:
   sha: []
 merge-message-formats: {}
