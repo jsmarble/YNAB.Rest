@@ -42,7 +42,6 @@ jobs:
           name: Install GitVersion
           command: |
             dotnet tool install --global gitversion.tool
-            export PATH="$PATH:/root/.dotnet/tools"
 
       - run:
           name: Get Version
@@ -68,7 +67,6 @@ jobs:
           name: Install GitVersion
           command: |
             dotnet tool install --global gitversion.tool
-            export PATH="$PATH:/root/.dotnet/tools"
 
       - run:
           name: Get Version
@@ -80,10 +78,11 @@ jobs:
       - run:
           name: Build and Pack
           command: |
+            export PATH="$PATH:/root/.dotnet/tools"
             dotnet-gitversion /updateprojectfiles
             rm -f bin/Debug/*.nupkg
             dotnet pack
-            dotnet nuget pushx bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
+            dotnet nuget push bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
           name: Push Changes
@@ -102,3 +101,6 @@ workflows:
       - deploy_nuget:
           requires:
             - test
+          filters:
+            branches:
+              only: master
