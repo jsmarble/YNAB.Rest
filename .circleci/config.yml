@@ -96,7 +96,7 @@ workflows:
       - test:
           requires:
             - build
-      - semver:
-      - deploy_nuget
+      - semver
+      - deploy_nuget:
           requires:
             - test
