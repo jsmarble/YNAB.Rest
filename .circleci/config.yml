@@ -77,7 +77,7 @@ jobs:
           name: Get Version
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
-            SEMVER=$(dotnet-gitversion /showvariable SemVer)
+            export SEMVER=$(dotnet-gitversion /showvariable SemVer)
             echo "Releasing version $SEMVER"
 
       # - run:
