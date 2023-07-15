@@ -1,0 +1,106 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:7.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Restore Dependencies
+          command: dotnet restore
+
+      - run:
+          name: Build
+          command: dotnet build $lib
+
+  test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:7.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Restore Dependencies
+          command: dotnet restore
+
+      - run:
+          name: Test
+          command: dotnet test
+
+  semver:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:7.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install GitVersion
+          command: |
+            dotnet tool install --global gitversion.tool
+
+      - run:
+          name: Get Version
+          command: |
+            export PATH="$PATH:/root/.dotnet/tools"
+            SEMVER=$(dotnet-gitversion /showvariable SemVer)
+            NEXTVER=$(dotnet-gitversion /showvariable MajorMinorPatch)
+            echo "Current branch semver is '$SEMVER'"
+            echo "Main branch candidate semver is '$NEXTVER'"
+
+  deploy_nuget:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:7.0
+
+    steps:
+      - checkout
+
+      - run:
+          name: Restore Dependencies
+          command: dotnet restore
+
+      - run:
+          name: Install GitVersion
+          command: |
+            dotnet tool install --global gitversion.tool
+
+      - run:
+          name: Get Version
+          command: |
+            export PATH="$PATH:/root/.dotnet/tools"
+            SEMVER=$(dotnet-gitversion /showvariable SemVer)
+            echo "Releasing version $SEMVER"
+
+      - run:
+          name: Build and Pack
+          command: |
+            export PATH="$PATH:/root/.dotnet/tools"
+            dotnet-gitversion /updateprojectfiles
+            rm -f bin/Debug/*.nupkg
+            dotnet pack
+            dotnet nuget push bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
+
+      - run:
+          name: Push Changes
+          command: |
+            git push -o ci.skip
+            git push --tags
+
+workflows:
+  test_build_release:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - semver
+      - deploy_nuget:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
