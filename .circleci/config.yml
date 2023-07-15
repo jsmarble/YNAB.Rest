@@ -79,6 +79,7 @@ jobs:
             export PATH="$PATH:/root/.dotnet/tools"
             export SEMVER=$(dotnet-gitversion /showvariable SemVer)
             echo "Releasing version $SEMVER"
+            echo "export SEMVER=\"$SEMVER\"" >> "$BASH_ENV"
 
       # - run:
       #     name: Build and Pack
