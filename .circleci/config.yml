@@ -74,26 +74,20 @@ jobs:
           command: dotnet restore
 
       - run:
-          name: Install GitVersion and ssh
-          command: |
-            apk add openssh-client
-            dotnet tool install --global gitversion.tool
-
-      - run:
           name: Get Version
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
             SEMVER=$(dotnet-gitversion /showvariable SemVer)
             echo "Releasing version $SEMVER"
 
-      - run:
-          name: Build and Pack
-          command: |
-            export PATH="$PATH:/root/.dotnet/tools"
-            dotnet-gitversion /updateprojectfiles
-            rm -f bin/Debug/*.nupkg
-            dotnet pack
-            dotnet nuget push YNAB.Rest/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
+      # - run:
+      #     name: Build and Pack
+      #     command: |
+      #       export PATH="$PATH:/root/.dotnet/tools"
+      #       dotnet-gitversion /updateprojectfiles
+      #       rm -f bin/Debug/*.nupkg
+      #       dotnet pack
+      #       dotnet nuget push YNAB.Rest/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
           name: Push Changes
