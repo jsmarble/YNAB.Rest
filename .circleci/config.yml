@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
 
   test:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -33,7 +33,7 @@ jobs:
 
   semver:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -54,18 +54,23 @@ jobs:
 
   deploy_nuget:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
+
+      - add_ssh_keys:
+            fingerprints:
+              - "20:b8:d0:e1:f6:11:db:d2:d7:21:e4:ea:ac:72:32:ed"
 
       - run:
           name: Restore Dependencies
           command: dotnet restore
 
       - run:
-          name: Install GitVersion
+          name: Install GitVersion and ssh
           command: |
+            apk add openssh-client
             dotnet tool install --global gitversion.tool
 
       - run:
