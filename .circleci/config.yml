@@ -63,11 +63,11 @@ jobs:
             apk add openssh-client
             dotnet tool install --global gitversion.tool
 
-      - checkout
-
       - add_ssh_keys:
             fingerprints:
               - "20:b8:d0:e1:f6:11:db:d2:d7:21:e4:ea:ac:72:32:ed"
+
+      - checkout
 
       - run:
           name: Restore Dependencies
@@ -93,6 +93,7 @@ jobs:
           name: Tag Release and Push Changes
           command: |
             git branch --set-upstream-to origin/$CIRCLE_BRANCH
+            echo "Tagging release with '$SEMVER'"
             git tag $SEMVER
             git push -o ci.skip
             git push --tags
