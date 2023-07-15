@@ -31,7 +31,7 @@ jobs:
           name: Test
           command: dotnet test
 
-  release:
+  semver:
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:7.0
 
@@ -39,14 +39,10 @@ jobs:
       - checkout
 
       - run:
-          name: Restore Dependencies
-          command: dotnet restore
-
-      - run:
           name: Install GitVersion
-          command: dotnet tool install --global gitversion.tool
-          environment:
-            PATH: ~/.dotnet/tools
+          command: |
+            dotnet tool install --global gitversion.tool
+            export PATH="$PATH:/root/.dotnet/tools"
 
       - run:
           name: Get Version
@@ -69,9 +65,9 @@ jobs:
 
       - run:
           name: Install GitVersion
-          command: dotnet tool install --global gitversion.tool
-          environment:
-            PATH: ~/.dotnet/tools
+          command: |
+            dotnet tool install --global gitversion.tool
+            export PATH="$PATH:/root/.dotnet/tools"
 
       - run:
           name: Get Version
