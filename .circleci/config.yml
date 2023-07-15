@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
 
   test:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -33,7 +33,7 @@ jobs:
 
   semver:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
       - checkout
@@ -54,9 +54,19 @@ jobs:
 
   deploy_nuget:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:7.0
+      - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
+      - run:
+          name: Install GitVersion and ssh
+          command: |
+            apk add --no-cache bash openssh-client
+            dotnet tool install --global gitversion.tool
+
+      - add_ssh_keys:
+            fingerprints:
+              - "20:b8:d0:e1:f6:11:db:d2:d7:21:e4:ea:ac:72:32:ed"
+
       - checkout
 
       - run:
@@ -64,19 +74,17 @@ jobs:
           command: dotnet restore
 
       - run:
-          name: Install GitVersion
-          command: |
-            dotnet tool install --global gitversion.tool
-
-      - run:
           name: Get Version
+          shell: /bin/bash
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
-            SEMVER=$(dotnet-gitversion /showvariable SemVer)
+            export SEMVER=$(dotnet-gitversion /showvariable SemVer)
             echo "Releasing version $SEMVER"
+            echo "export SEMVER=\"$SEMVER\"" >> "$BASH_ENV"
 
       - run:
           name: Build and Pack
+          shell: /bin/bash
           command: |
             export PATH="$PATH:/root/.dotnet/tools"
             dotnet-gitversion /updateprojectfiles
@@ -85,8 +93,12 @@ jobs:
             dotnet nuget push YNAB.Rest/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
-          name: Push Changes
+          name: Tag Release and Push Changes
+          shell: /bin/bash
           command: |
+            git branch --set-upstream-to origin/$CIRCLE_BRANCH
+            echo "Tagging release with '$SEMVER'"
+            git tag $SEMVER
             git push -o ci.skip
             git push --tags
 
