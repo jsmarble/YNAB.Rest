@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Joshua Marble</Authors>
     <PackageId>YNAB.Rest</PackageId>
-    <Version>0.7.0</Version>
+    <Version>1.1.0</Version>
     <Description>A .NET Standard client for the YNAB REST API, using the Refit REST library.</Description>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit.Newtonsoft.Json" Version="6.3.2" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
