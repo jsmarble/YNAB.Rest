@@ -57,6 +57,12 @@ jobs:
       - image: mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
     steps:
+      - run:
+          name: Install GitVersion and ssh
+          command: |
+            apk add openssh-client
+            dotnet tool install --global gitversion.tool
+
       - checkout
 
       - add_ssh_keys:
