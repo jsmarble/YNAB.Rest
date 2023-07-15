@@ -106,6 +106,6 @@ workflows:
       - deploy_nuget:
           requires:
             - test
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
