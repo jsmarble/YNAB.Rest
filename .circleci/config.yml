@@ -92,11 +92,11 @@ jobs:
 workflows:
   test_build_release:
     jobs:
-      - test
-      - build:
+      - build
+      - test:
           requires:
-            - test
-      - release:
-          requires:
-            - test
             - build
+      - semver:
+      - deploy_nuget
+          requires:
+            - test
