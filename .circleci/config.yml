@@ -92,6 +92,7 @@ jobs:
       - run:
           name: Push Changes
           command: |
+            git branch --set-upstream-to origin/$CIRCLE_BRANCH
             git push -o ci.skip
             git push --tags
 
