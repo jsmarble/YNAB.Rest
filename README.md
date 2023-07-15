@@ -1,3 +1,5 @@
+[![YNAB.Rest](https://circleci.com/gh/jsmarble/YNAB.Rest.svg?style=shield)](https://app.circleci.com/pipelines/github/jsmarble/YNAB.Rest)
+
 # YNAB.Rest
 A .NET client for the YNAB REST API, using the [Refit REST library](https://github.com/reactiveui/refit). All REST methods are asynchronous and awaitable.
 
