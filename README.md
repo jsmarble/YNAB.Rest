@@ -1,4 +1,5 @@
 [![YNAB.Rest](https://circleci.com/gh/jsmarble/YNAB.Rest.svg?style=shield)](https://app.circleci.com/pipelines/github/jsmarble/YNAB.Rest)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
 # YNAB.Rest
 A cross-platform .NET client for the YNAB REST API, using the [Refit REST library](https://github.com/reactiveui/refit). All REST methods are asynchronous and awaitable.
