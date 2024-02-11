@@ -352,4 +352,4 @@ MigrationBackup/
 .ionide/
 
 #YNAB secret
-accessToken.txt
+accessToken

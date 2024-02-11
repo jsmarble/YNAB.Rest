@@ -1,4 +1,5 @@
 using Refit;
+using System;
 using System.Threading.Tasks;
 
 namespace YNAB.Rest
@@ -36,9 +37,10 @@ namespace YNAB.Rest
         /// Gets a single Budget for the specified Budget ID.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the Budget in the Data property.</returns>
-        [Get("/budgets/{budgetId}")]
-        Task<ApiResponse<BudgetData>> GetBudget(string budgetId);
+        [Get("/budgets/{budgetId}?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<BudgetData>> GetBudget(string budgetId, Int64 lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets all Categories for the specified Budget.
@@ -189,7 +191,7 @@ namespace YNAB.Rest
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="payeeId">The ID of the Payee.</param>
-        /// <reurns>An ApiResponse object containing a list of locations for a payee</returns>
+        /// <returns>An ApiResponse object containing a list of locations for a payee</returns>
         [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
         Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee(string budgetId, string payeeId);
 
