@@ -90,7 +90,7 @@ jobs:
             dotnet-gitversion /updateprojectfiles
             rm -f bin/Debug/*.nupkg
             dotnet pack
-            dotnet nuget push YNAB.Rest/bin/Debug/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
+            dotnet nuget push YNAB.Rest/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k $nuget_api_key
 
       - run:
           name: Tag Release and Push Changes
