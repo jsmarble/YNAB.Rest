@@ -1,0 +1,6 @@
+image: gitpod/workspace-dotnet
+
+tasks:
+  - name: build library
+    init: dotnet restore
+    command: dotnet build
