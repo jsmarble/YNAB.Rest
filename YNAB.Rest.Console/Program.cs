@@ -38,6 +38,10 @@ namespace YNAB.RestConsole
                 Console.WriteLine($"Reading budget {budget.Name} ({budget.Id})");
                 Console.WriteLine();
 
+                var budgetDetails = await api.GetBudget(budget.Id, 115);
+                Console.WriteLine($"server knowledge: {budgetDetails.Data.ServerKnowledge}");
+                Console.WriteLine();
+
                 var accountsResponse = await api.GetAccounts(budget.Id);
                 var accounts = accountsResponse.Data.Accounts;
                 Console.WriteLine($"Found {accounts.Count} accounts!");

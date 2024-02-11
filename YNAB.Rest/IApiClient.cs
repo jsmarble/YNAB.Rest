@@ -1,4 +1,5 @@
 using Refit;
+using System;
 using System.Threading.Tasks;
 
 namespace YNAB.Rest
@@ -12,9 +13,10 @@ namespace YNAB.Rest
         /// Gets all Accounts for the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the list of Accounts in the Data property.</returns>
-        [Get("/budgets/{budgetId}/accounts")]
-        Task<ApiResponse<AccountsData>> GetAccounts(string budgetId);
+        [Get("/budgets/{budgetId}/accounts?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<AccountsData>> GetAccounts(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets a single Account for the specified Budget and account ID.
@@ -36,17 +38,19 @@ namespace YNAB.Rest
         /// Gets a single Budget for the specified Budget ID.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the Budget in the Data property.</returns>
-        [Get("/budgets/{budgetId}")]
-        Task<ApiResponse<BudgetData>> GetBudget(string budgetId);
+        [Get("/budgets/{budgetId}?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<BudgetData>> GetBudget(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets all Categories for the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the list of Categories in the Data property.</returns>
-        [Get("/budgets/{budgetId}/categories")]
-        Task<ApiResponse<CategoriesData>> GetCategories(string budgetId);
+        [Get("/budgets/{budgetId}/categories?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<CategoriesData>> GetCategories(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets a single Category for the specified Budget and category ID.
@@ -61,18 +65,20 @@ namespace YNAB.Rest
         /// Gets all Transactions for the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the list of Transactions in the Data property.</returns>
-        [Get("/budgets/{budgetId}/transactions")]
-        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId);
+        [Get("/budgets/{budgetId}/transactions?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets all Transactions from the specified Budget that occured on or after a specified date.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget</param>
         /// <param name="sinceDate">The ISO start date. For example: 2018-03-01</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns></returns>
-        [Get("/budgets/{budgetId}/transactions?since_date={sinceDate}")]
-        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, string sinceDate);
+        [Get("/budgets/{budgetId}/transactions?since_date={sinceDate}&last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, string sinceDate, long lastKnowledgeOfServer = 0);
 
 
         /// <summary>
@@ -154,9 +160,10 @@ namespace YNAB.Rest
         /// Gets a list of payees in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the list of payees in the Data property.</returns>
-        [Get("/budgets/{budgetId}/payees")]
-        Task<ApiResponse<PayeesData>> GetPayees(string budgetId);
+        [Get("/budgets/{budgetId}/payees?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<PayeesData>> GetPayees(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets a single payee in the specified Budget.
@@ -189,7 +196,7 @@ namespace YNAB.Rest
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="payeeId">The ID of the Payee.</param>
-        /// <reurns>An ApiResponse object containing a list of locations for a payee</returns>
+        /// <returns>An ApiResponse object containing a list of locations for a payee</returns>
         [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
         Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee(string budgetId, string payeeId);
 
@@ -206,17 +213,19 @@ namespace YNAB.Rest
         /// Gets a list of months in the specific Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns> An ApiResponse object containing a list of months for a budget</returns>
-        [Get ("/budgets/{budgetId}/months")]
-        Task<ApiResponse<MonthsData>> GetMonths(string budgetId);
+        [Get ("/budgets/{budgetId}/months?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<MonthsData>> GetMonths(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets a list of scheduled transactions in the specific Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing a list of scheduled transactions in the Data property</returns>
-        [Get("/budgets/{budgetId}/scheduled_transactions")]
-        Task<ApiResponse<ScheduledTransactionsData>> GetScheduledTransactions(string budgetId);
+        [Get("/budgets/{budgetId}/scheduled_transactions?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<ScheduledTransactionsData>> GetScheduledTransactions(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets a single scheduled transaction in the specific Budget.
