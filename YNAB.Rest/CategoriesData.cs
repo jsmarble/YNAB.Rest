@@ -6,6 +6,6 @@ namespace YNAB.Rest
     {
 //        public IList<Category> Categories { get; set; }
         public IList<CategoryGroup> CategoryGroups { get; set; }
-        public int ServerKnowledge { get; set; }
+        public long ServerKnowledge { get; set; }
     }
 }

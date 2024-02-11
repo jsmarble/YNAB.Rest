@@ -65,9 +65,10 @@ namespace YNAB.Rest
         /// Gets all Transactions for the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns>An ApiResponse object containing the list of Transactions in the Data property.</returns>
-        [Get("/budgets/{budgetId}/transactions")]
-        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId);
+        [Get("/budgets/{budgetId}/transactions?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        Task<ApiResponse<TransactionsData>> GetTransactions(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
         /// Gets all Transactions from the specified Budget that occured on or after a specified date.
