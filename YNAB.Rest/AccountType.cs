@@ -12,6 +12,11 @@
         PayPal,
         MerchantAccount,
         InvestmentAccount,
-        Mortgage
+        Mortgage,
+        AutoLoan,
+        StudentLoan,
+        PersonalLoan,
+        MedicalDebt,
+        OtherDebt
     }
 }
