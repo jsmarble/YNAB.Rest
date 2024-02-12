@@ -7,7 +7,9 @@ namespace YNAB.Rest
     {
         TB,
         TBD,
-        MF
+        MF,
+        NEED,
+        DEBT
     }
 
     public class Category

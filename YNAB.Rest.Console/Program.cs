@@ -120,6 +120,18 @@ namespace YNAB.RestConsole
                 Console.WriteLine();
 
                 payees.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
+
+                Console.WriteLine($"Fetching Categories...");
+                var categoryResponse = await api.GetCategories(budget.Id);
+                var categoryGroups = categoryResponse.Data.CategoryGroups;
+                Console.WriteLine($"Found {categoryGroups.Count} category groups!");
+                Console.WriteLine();
+                categoryGroups.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
+                var categories = categoryGroups.SelectMany(p => p.Categories).OrderBy(x => x.CategoryGroupId).ThenBy(x => x.Name).ToList();
+                Console.WriteLine($"Found {categories.Count} categories!");
+                Console.WriteLine();
+                categories.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
+
             }
             catch (Exception ex)
             {
