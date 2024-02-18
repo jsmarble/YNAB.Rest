@@ -35,6 +35,8 @@ namespace YNAB.Rest
         public int? GoalUnderFunded { get; set; }
         public int? GoalOverallFunded { get; set; }
         public int? GoalOverallLeft { get; set; }
+        public int? GoalTarget { get; set; }
+        public string GoalTargetMonth { get; set; }
         /* JSON
 {
   "data": {
