@@ -1,14 +1,18 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
 namespace YNAB.Rest {
     public class ScheduledTransaction {
-        public string id { get; set; }
-        public string dateFirst { get; set; }
-        public string dateNext { get; set; }
+        public string Id { get; set; }
+        public string DateFirst { get; set; }
+        public string DateNext { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public Frequency Frequency { get; set; }
         public long Amount { get; set; }
         public string Memo { get; set; }
-        public FlagColor FlagColor { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public FlagColor? FlagColor { get; set; }
         public string AccountId { get; set; }
         public string PayeeId { get; set; }
         public string CategoryId { get; set; }
