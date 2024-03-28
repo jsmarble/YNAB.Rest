@@ -37,6 +37,7 @@ namespace YNAB.Rest
         public string AccountName { get; set; }
         public string PayeeName { get; set; }
         public string CategoryName { get; set; }
+        [JsonProperty(PropertyName = "subtransactions")]
         public IList<SubTransaction> SubTransactions { get; set; }
 
         /*
