@@ -38,6 +38,7 @@ namespace YNAB.Rest
         public string PayeeName { get; set; }
         public string CategoryName { get; set; }
         public IList<SubTransaction> SubTransactions { get; set; }
+        public string MatchedTransactionId { get; set; }
 
         /*
 {
