@@ -33,6 +33,7 @@ namespace YNAB.Rest
         public bool Approved { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public FlagColor? FlagColor { get; set; }
+        public string FlagName { get; set; }
         public string AccountId { get; set; }
         public string PayeeId { get; set; }
         public string CategoryId { get; set; }
