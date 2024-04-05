@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace YNAB.Rest
 {
@@ -17,6 +18,7 @@ namespace YNAB.Rest
         public string Id { get; set; }
         public string Name { get; set; }
         public string CategoryGroupId { get; set; }
+        public string CategoryGroupName { get; set; }
         public bool Hidden { get; set; }
         public string OriginalCategoryGroupId { get; set; }
         public string Note { get; set; }
@@ -24,11 +26,18 @@ namespace YNAB.Rest
         public int Activity { get; set; }
         public int Balance { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        //        public GoalType GoalType { get; set; }
-        //        public int GoalPercentageComplete { get; set; }
         public GoalType? GoalType { get; set; }
         public int? GoalPercentageComplete { get; set; }
         public bool Deleted { get; set; }
+        public int? GoalDay { get; set; }
+        public int? GoalCadence { get; set; }
+        public int? GoalCadenceFrequency { get; set; }
+        public int? GoalMonthsToBudget { get; set; }
+        public int? GoalUnderFunded { get; set; }
+        public int? GoalOverallFunded { get; set; }
+        public int? GoalOverallLeft { get; set; }
+        public int? GoalTarget { get; set; }
+        public DateTime? GoalTargetMonth { get; set; }
 
         /* JSON
 {
@@ -36,6 +45,7 @@ namespace YNAB.Rest
     "category": {
       "id": "string",
       "category_group_id": "string",
+      "category_group_name": "string",
       "name": "string",
       "hidden": true,
       "original_category_group_id": "string|null",
@@ -44,10 +54,17 @@ namespace YNAB.Rest
       "activity": 0,
       "balance": 0,
       "goal_type": "TB",
+      "goal_day": 0,
+      "goal_cadence": 0,
+      "goal_cadence_frequency": 0,
       "goal_creation_month": "string|null",
       "goal_target": "integer|null",
       "goal_target_month": "string|null",
       "goal_percentage_complete": "integer|null",
+      "goal_months_to_budget": 0,
+      "goal_under_funded": 0,
+      "goal_overall_funded": 0,
+      "goal_overall_left": 0,
       "deleted": true
     }
   }
