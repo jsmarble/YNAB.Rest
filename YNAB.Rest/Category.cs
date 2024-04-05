@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
 
 namespace YNAB.Rest
 {
@@ -36,7 +37,8 @@ namespace YNAB.Rest
         public int? GoalOverallFunded { get; set; }
         public int? GoalOverallLeft { get; set; }
         public int? GoalTarget { get; set; }
-        public string GoalTargetMonth { get; set; }
+        public DateTime? GoalTargetMonth { get; set; }
+
         /* JSON
 {
   "data": {
