@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Refit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using YNAB.Rest;
@@ -17,7 +19,10 @@ namespace YNAB.RestConsole
             try
             {
                 HttpClientHandler httpClientHandler = new HttpClientHandler();
-                //httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+                //to intercept traffic with http toolkit (https://httptoolkit.com)
+                httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                httpClientHandler.Proxy = new WebProxy("http://localhost:8000");
 
                 string token = await GetAccessToken();
 
@@ -66,7 +71,7 @@ namespace YNAB.RestConsole
                          Amount = Convert.ToInt32(108.41 * 1000),
                          Memo = "This is test 1",
                          AccountId = account.Id,
-                         Date = new DateTime(2018, 01, 15),
+                         Date = DateTime.Today.AddDays(-2),
                          Cleared = ClearedStatus.Cleared
                     },
                     new Transaction
@@ -75,7 +80,7 @@ namespace YNAB.RestConsole
                          Amount = Convert.ToInt32(208.42 * 1000),
                          Memo="This is test 2",
                          AccountId = account.Id,
-                         Date = new DateTime(2018, 02, 15),
+                         Date = DateTime.Today.AddDays(-3),
                          Cleared = ClearedStatus.Uncleared
                     },
                     new Transaction
@@ -84,7 +89,7 @@ namespace YNAB.RestConsole
                          Amount = Convert.ToInt32(308.43 * 1000),
                          Memo = "This is test 3",
                          AccountId = account.Id,
-                         Date = new DateTime(2018, 03, 15),
+                         Date = DateTime.Today.AddDays(-4),
                          Cleared = ClearedStatus.Uncleared
                     }
                 };
@@ -104,7 +109,7 @@ namespace YNAB.RestConsole
                         Amount = Convert.ToInt32(123.45 * 1000),
                         Memo = "This is test 123",
                         AccountId = account.Id,
-                        Date = new DateTime(2018, 01, 23),
+                        Date = DateTime.Today.AddDays(-1),
                         Cleared = ClearedStatus.Cleared
                     }
                 };
@@ -132,6 +137,18 @@ namespace YNAB.RestConsole
                 Console.WriteLine();
                 categories.ToList().ForEach(p => Console.WriteLine($"{p.Id} | {p.Name}"));
 
+                var catWithGoal = categories.FirstOrDefault(x => x.GoalType.HasValue);
+                var catWithoutGoal = categories.FirstOrDefault(x => !x.GoalType.HasValue);
+                if (catWithGoal != null)
+                    Console.WriteLine($"{catWithGoal.Id} | {catWithGoal.GoalType} | {catWithGoal.GoalTargetMonth}");
+                else
+                    Console.WriteLine("No category with goals!");
+
+                if (catWithoutGoal != null)
+                    Console.WriteLine($"{catWithoutGoal.Id} | {catWithoutGoal.GoalType} | {catWithoutGoal.GoalTargetMonth}");
+                else
+                    await Console.Out.WriteLineAsync("No category without goals!");
+
                 Console.WriteLine("Getting scheduled transactions...");
                 var scheduledTransactionsResponse = await api.GetScheduledTransactions(budget.Id);
                 var scheduledTransactions = scheduledTransactionsResponse.Data.ScheduledTransactions.Where(x => !x.Deleted).ToList();
@@ -139,6 +156,10 @@ namespace YNAB.RestConsole
                 Console.WriteLine();
 
                 scheduledTransactions.ToList().ForEach(x => Console.WriteLine($"{x.Id} | {x.PayeeId} | {x.CategoryId} | {x.Amount.YnabLongToDecimal():C2} | {x.FlagColor}"));
+            }
+            catch (ApiException apiEx)
+            {
+                Console.WriteLine("Error: " + apiEx.Content);
             }
             catch (Exception ex)
             {
@@ -157,6 +178,7 @@ namespace YNAB.RestConsole
             if (File.Exists(ACCESS_TOKEN_FILE))
             {
                 apiToken = await File.ReadAllTextAsync(ACCESS_TOKEN_FILE);
+                apiToken = apiToken.Trim();
             }
             else
             {
