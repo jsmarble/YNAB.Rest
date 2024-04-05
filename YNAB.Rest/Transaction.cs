@@ -44,6 +44,7 @@ namespace YNAB.Rest
         public string CategoryName { get; set; }
         [JsonProperty(PropertyName = "subtransactions")]
         public IList<SubTransaction> SubTransactions { get; set; }
+        public string MatchedTransactionId { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public DebtTransactionType? DebtTransactionType { get; set; }
 
