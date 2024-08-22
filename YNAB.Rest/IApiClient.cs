@@ -157,6 +157,15 @@ namespace YNAB.Rest
         Task<ApiResponse<TransactionBody>> PutTransaction(string budgetId, string transactionId, [Body] TransactionBody transaction);
 
         /// <summary>
+        /// Deletes a single Transaction in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="transactionId">The ID of the Transaction.</param>
+        /// <returns>A response containing the updated Transaction.</returns>
+        [Delete("/budgets/{budgetId}/transactions/{transactionId}")]
+        Task<ApiResponse<TransactionBody>> DeleteTransaction(string budgetId, string transactionId);
+
+        /// <summary>
         /// Gets a list of payees in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
@@ -233,8 +242,16 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget</param>
         /// <param name="scheduledTransactionId">The ID of the scheduled transaction</param>
         /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
-        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId")]
+        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId}")]
         Task<ApiResponse<ScheduledTransactionData>> GetScheduledTransaction(string budgetId, string scheduledTransactionId);
 
+        /// <summary>
+        /// Gets a single scheduled transaction in the specific Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="scheduledTransaction">The scheduled transaction</param>
+        /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
+        [Post("/budgets/{budgetId}/scheduled_transactions")]
+        Task<ApiResponse<ScheduledTransactionData>> PostScheduledTransaction(string budgetId, [Body] ScheduledTransactionData scheduledTransaction);
     }
 }
