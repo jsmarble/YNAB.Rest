@@ -161,7 +161,7 @@ namespace YNAB.Rest
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="transactionId">The ID of the Transaction.</param>
-        /// <returns>A response containing the updated Transaction.</returns>
+        /// <returns>A response containing the deleted Transaction.</returns>
         [Delete("/budgets/{budgetId}/transactions/{transactionId}")]
         Task<ApiResponse<TransactionBody>> DeleteTransaction(string budgetId, string transactionId);
 
