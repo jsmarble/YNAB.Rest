@@ -246,7 +246,7 @@ namespace YNAB.Rest
         Task<ApiResponse<ScheduledTransactionData>> GetScheduledTransaction(string budgetId, string scheduledTransactionId);
 
         /// <summary>
-        /// Gets a single scheduled transaction in the specific Budget.
+        /// Gets a single scheduled transaction in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget</param>
         /// <param name="scheduledTransaction">The scheduled transaction</param>
