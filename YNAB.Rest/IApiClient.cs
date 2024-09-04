@@ -157,6 +157,15 @@ namespace YNAB.Rest
         Task<ApiResponse<TransactionBody>> PutTransaction(string budgetId, string transactionId, [Body] TransactionBody transaction);
 
         /// <summary>
+        /// Deletes a single Transaction in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget.</param>
+        /// <param name="transactionId">The ID of the Transaction.</param>
+        /// <returns>A response containing the deleted Transaction.</returns>
+        [Delete("/budgets/{budgetId}/transactions/{transactionId}")]
+        Task<ApiResponse<TransactionBody>> DeleteTransaction(string budgetId, string transactionId);
+
+        /// <summary>
         /// Gets a list of payees in the specified Budget.
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
@@ -171,7 +180,7 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="payeeId">The ID of the Payee.</param>
         /// <returns>An ApiResponse object containing a single payee in the Data property.</returns>
-        [Get("/budgets/{budgetId/payees/{payeeId}")]
+        [Get("/budgets/{budgetId}/payees/{payeeId}")]
         Task<ApiResponse<PayeeData>> GetPayee(string budgetId, string payeeId);
 
         /// <summary>
@@ -179,7 +188,7 @@ namespace YNAB.Rest
         /// </summary>
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <returns>An ApiResponse object containing a list of payee locations in the Data Property.</returns>
-        [Get ("/budgets/{budgetId}/payee_locations")]
+        [Get("/budgets/{budgetId}/payee_locations")]
         Task<ApiResponse<PayeeLocationsData>> GetPayeeLocations(string budgetId);
 
         /// <summary>
@@ -188,7 +197,7 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="payeeLocationId">The ID of the Payee Location</param>
         /// <returns>An ApiResponse object containing a single payee location in the Data Property.</returns>
-        [Get ("/budgets/{budgetId}/payee_locations/{payeeLocationId}")]
+        [Get("/budgets/{budgetId}/payee_locations/{payeeLocationId}")]
         Task<ApiResponse<PayeeLocationsData>> GetPayeeLocation(string budgetId, string payeeLocationId);
 
         /// <summary>
@@ -197,7 +206,7 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="payeeId">The ID of the Payee.</param>
         /// <returns>An ApiResponse object containing a list of locations for a payee</returns>
-        [Get ("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
+        [Get("/budgets/{budgetId}/payees/{payeeId}/payee_locations")]
         Task<ApiResponse<PayeeLocationsData>> GetLocationsForPayee(string budgetId, string payeeId);
 
         /// <summary>
@@ -206,7 +215,7 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="month">The month to retrieve.</param>
         /// <returns> An ApiResponse object containing data for a month</returns>
-        [Get ("/budgets/{budgetId}/months/{month}")]
+        [Get("/budgets/{budgetId}/months/{month}")]
         Task<ApiResponse<MonthData>> GetMonth(string budgetId, string month);
 
         /// <summary>
@@ -215,7 +224,7 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget.</param>
         /// <param name="lastKnowledgeOfServer">(Optional) Only the data that has changed since the last knowledge of server will be included in the response.</param>
         /// <returns> An ApiResponse object containing a list of months for a budget</returns>
-        [Get ("/budgets/{budgetId}/months?last_knowledge_of_server={lastKnowledgeOfServer}")]
+        [Get("/budgets/{budgetId}/months?last_knowledge_of_server={lastKnowledgeOfServer}")]
         Task<ApiResponse<MonthsData>> GetMonths(string budgetId, long lastKnowledgeOfServer = 0);
 
         /// <summary>
@@ -233,8 +242,16 @@ namespace YNAB.Rest
         /// <param name="budgetId">The ID of the Budget</param>
         /// <param name="scheduledTransactionId">The ID of the scheduled transaction</param>
         /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
-        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId")]
+        [Get("/budgets/{budgetId}/scheduled_transactions/{scheduledTransactionId}")]
         Task<ApiResponse<ScheduledTransactionData>> GetScheduledTransaction(string budgetId, string scheduledTransactionId);
 
+        /// <summary>
+        /// Gets a single scheduled transaction in the specified Budget.
+        /// </summary>
+        /// <param name="budgetId">The ID of the Budget</param>
+        /// <param name="scheduledTransaction">The scheduled transaction</param>
+        /// <returns>An ApiResponse object containing a scheduled transaction in the Data property</returns>
+        [Post("/budgets/{budgetId}/scheduled_transactions")]
+        Task<ApiResponse<ScheduledTransactionData>> PostScheduledTransaction(string budgetId, [Body] ScheduledTransactionData scheduledTransaction);
     }
 }
