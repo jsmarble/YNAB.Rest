@@ -25,6 +25,7 @@ namespace YNAB.Rest
     public class Transaction
     {
         public string Id { get; set; }
+        [JsonConverter(typeof(IsoDateOnlyConverter))]
         public DateTime Date { get; set; }
         public string Memo { get; set; }
         public int Amount { get; set; }
